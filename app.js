@@ -1,48 +1,43 @@
-/* =============================================
-   CLOUDCONFIG — app.js
-   Configurador SaaS | Ejercicios JS Parte 2
-   ============================================= */
+
 
 "use strict";
 
-// ─────────────────────────────────────────────
 // PRECIOS Y CONSTANTES
-// ─────────────────────────────────────────────
 const REGION_PRICES = {
   us: 0,
   eu: 10,
   as: 15,
 
-  // 🌎 Suramérica
+  // Suramérica
   br: 20, // Brasil
   cl: 18, // Chile
 
-  // 🌏 Asia (más granular)
+  // Asia (más granular)
   in: 12, // India (barato)
   sg: 22, // Singapur (caro)
   jp: 25, // Japón (premium)
   id: 13, // Indonesia
 
-  // 🌏 Oceanía
+  // Oceanía
   au: 28, // Australia (muy caro)
 };
 
 const REGION_NAMES = {
   us: "🇺🇸 EE.UU.",
   eu: "🇪🇺 Europa",
-  as: "🌏 Asia",
+  as: "Asia",
 
-  // 🌎 Suramérica
+  // Suramérica
   br: "🇧🇷 Brasil",
   cl: "🇨🇱 Chile",
 
-  // 🌏 Asia
+  // Asia
   in: "🇮🇳 India",
   sg: "🇸🇬 Singapur",
   jp: "🇯🇵 Japón",
   id: "🇮🇩 Indonesia",
 
-  // 🌏 Oceanía
+  // Oceanía
   au: "🇦🇺 Australia",
 };
 
@@ -63,11 +58,9 @@ const PLAN_NAMES = {
   pro: "Professional",
   enterprise: "Enterprise",
 };
-// ─────────────────────────────────────────────
-// PASO 1 — VALIDACIÓN EN TIEMPO REAL (blur/input)
-// ─────────────────────────────────────────────
 
-// Funciones flecha de validación (Punto 3c)
+// PASO 1 — VALIDACIÓN EN TIEMPO REAL (blur/input)
+// Funciones flecha de validación 
 const validarRequerido = (valor) => valor.trim().length > 0;
 const validarMinCaracteres = (valor, min) => valor.trim().length >= min;
 const validarEmail = (valor) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor.trim());
@@ -118,7 +111,7 @@ function iniciarValidacionCampos() {
       limpiarError("error-company-name", inputEmpresa);
   });
 
-  // Descripción — mínimo 20 caracteres
+  // Descripción validar el mínimo de 20 caracteres
   const textareaDesc = document.getElementById("project-desc");
   textareaDesc.addEventListener("blur", () => {
     if (!validarMinCaracteres(textareaDesc.value, 20)) {
@@ -138,7 +131,7 @@ function iniciarValidacionCampos() {
       limpiarError("error-project-desc", textareaDesc);
   });
 
-  // Email
+  // Validación correo
   const inputEmail = document.getElementById("contact-email");
   inputEmail.addEventListener("blur", () => {
     if (!validarRequerido(inputEmail.value)) {
@@ -157,11 +150,9 @@ function iniciarValidacionCampos() {
   });
 }
 
-// ─────────────────────────────────────────────
-// PASO 2 — SUBTOTAL AUTOMÁTICO (select + checkboxes)
-// ─────────────────────────────────────────────
 
-// Funciones flecha de cálculo (Punto 3c)
+// SUBTOTAL AUTOMÁTICO (select + checkboxes)
+// Funciones flecha de cálculo
 const calcularRegion = (region) => REGION_PRICES[region] ?? 0;
 const calcularServicios = (servicios) =>
   servicios.reduce((acc, svc) => acc + (SERVICE_PRICES[svc] ?? 0), 0);
@@ -191,15 +182,11 @@ function iniciarCalculoRecursos() {
   });
 }
 
-// ─────────────────────────────────────────────
-// PASO 4 — PROCESAMIENTO CON CALLBACK (Punto 4)
-// ─────────────────────────────────────────────
+
 
 /**
- * Formatea los datos (trim + uppercase en campos de texto)
- * y luego invoca el callback para presentar el resultado.
- * @param {Object} datos - Datos crudos del formulario
- * @param {Function} callback - Función de presentación del resumen
+ Formatea los datos (trim + uppercase en campos de texto)
+  y luego invoca el callback para presentar el resultado.
  */
 function procesarCotizacion(datos, callback) {
   const datosProcesados = {
@@ -220,8 +207,6 @@ function procesarCotizacion(datos, callback) {
 
 /**
  * Simula el envío al servidor con latencia de red.
- * @param {Object} data - Datos ya procesados
- * @returns {Promise<string>} - ID de transacción
  */
 function enviarAlServidor(data) {
   return new Promise((resolve, reject) => {
@@ -238,9 +223,7 @@ function enviarAlServidor(data) {
   });
 }
 
-// ─────────────────────────────────────────────
-// STEPPER — Navegación entre pasos
-// ─────────────────────────────────────────────
+// Navegación entre pasos
 
 let currentStep = 1;
 const TOTAL_STEPS = 4;
@@ -272,9 +255,9 @@ function irAPaso(nuevoStep) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// ─────────────────────────────────────────────
-// VALIDACIONES POR PASO
-// ─────────────────────────────────────────────
+
+// VALIDACIONES POR CADA PASO
+
 
 function validarPaso1() {
   let ok = true;
@@ -338,10 +321,7 @@ function validarPaso3() {
   return true;
 }
 
-// ─────────────────────────────────────────────
 // RESUMEN — Construir vista de resumen (Paso 4)
-// ─────────────────────────────────────────────
-
 function construirResumen() {
   const datos = obtenerDatosFormulario();
   const grid = document.getElementById("summary-grid");
@@ -376,10 +356,8 @@ function construirResumen() {
   document.getElementById("total-amount").textContent = `$${total} / mes`;
 }
 
-// ─────────────────────────────────────────────
-// OBTENER DATOS DEL FORMULARIO
-// ─────────────────────────────────────────────
 
+// OBTENER DATOS DEL FORMULARIO
 function obtenerDatosFormulario() {
   return {
     projectName: document.getElementById("project-name").value,
@@ -392,12 +370,12 @@ function obtenerDatosFormulario() {
   };
 }
 
-// ─────────────────────────────────────────────
-// PASO 6 — FLUJO ASÍNCRONO COMPLETO (submit)
-// ─────────────────────────────────────────────
+
+// FLUJO ASÍNCRONO COMPLETO (submit)
+
 
 function manejarEnvio(e) {
-  e.preventDefault(); // Punto 1c — evitar recarga
+  e.preventDefault(); // evitar recarga
 
   if (currentStep !== 4) return;
 
@@ -415,13 +393,13 @@ function manejarEnvio(e) {
   statusEl.textContent = "⏳ Procesando y enviando datos al servidor...";
   statusEl.style.color = "var(--text-muted)";
 
-  // Punto 4 — Callback para imprimir resumen en consola
+  // Callback para imprimir resumen en consola
   procesarCotizacion(datos, (datosProcesados) => {
     console.log("=== COTIZACIÓN PROCESADA ===");
     console.table(datosProcesados);
   });
 
-  // Punto 5 y 6 — Promesa + .then() / .catch()
+  //  Promesa + .then() / .catch()
   enviarAlServidor({ projectName: datos.projectName })
     .then((txId) => {
       // Éxito
@@ -453,9 +431,7 @@ function manejarEnvio(e) {
     });
 }
 
-// ─────────────────────────────────────────────
 // BOTONES DE NAVEGACIÓN
-// ─────────────────────────────────────────────
 
 function iniciarNavegacion() {
   // Paso 1 → 2
@@ -507,12 +483,10 @@ function iniciarNavegacion() {
   });
 }
 
-// ─────────────────────────────────────────────
 // INICIALIZACIÓN
-// ─────────────────────────────────────────────
 
 document.addEventListener("DOMContentLoaded", () => {
-  iniciarValidacionCampos(); // Punto 1d — eventos blur/input
-  iniciarCalculoRecursos(); // Punto 2d — subtotal automático
+  iniciarValidacionCampos(); //eventos blur/input
+  iniciarCalculoRecursos(); // subtotal automático
   iniciarNavegacion(); // Navegación entre pasos
 });
