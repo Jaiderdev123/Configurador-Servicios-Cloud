@@ -8,17 +8,17 @@ const REGION_PRICES = {
   eu: 40000,
   as: 60000,
 
-  // 🌎 Suramérica
+  // Suramérica
   br: 80000, // Brasil
   cl: 70000, // Chile
 
-  // 🌏 Asia (más granular)
+  // Asia (más granular)
   in: 45000, // India
   sg: 90000, // Singapur
   jp: 100000, // Japón (premium)
   id: 50000, // Indonesia
 
-  // 🌏 Oceanía
+  // Oceanía
   au: 115000, // Australia
 };
 
