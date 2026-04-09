@@ -399,6 +399,8 @@ function obtenerDatosFormulario() {
 function manejarEnvio(e) {
   e.preventDefault(); // Punto 1c — evitar recarga
 
+  if (currentStep !== 4) return;
+
   const datos = obtenerDatosFormulario();
 
   // Spinner y estado de carga
