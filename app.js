@@ -8,12 +8,61 @@
 // ─────────────────────────────────────────────
 // PRECIOS Y CONSTANTES
 // ─────────────────────────────────────────────
-const REGION_PRICES = { us: 0, eu: 10, as: 15 };
-const SERVICE_PRICES = { backup: 20, monitoring: 15, ssl: 10 };
-const PLAN_PRICES    = { basic: 50, pro: 100, enterprise: 250 };
-const PLAN_NAMES     = { basic: "Basic", pro: "Professional", enterprise: "Enterprise" };
-const REGION_NAMES   = { us: "🇺🇸 EE.UU.", eu: "🇪🇺 Europa", as: "🌏 Asia" };
+const REGION_PRICES = {
+  us: 0,
+  eu: 10,
+  as: 15,
 
+  // 🌎 Suramérica
+  br: 20, // Brasil
+  cl: 18, // Chile
+
+  // 🌏 Asia (más granular)
+  in: 12, // India (barato)
+  sg: 22, // Singapur (caro)
+  jp: 25, // Japón (premium)
+  id: 13, // Indonesia
+
+  // 🌏 Oceanía
+  au: 28, // Australia (muy caro)
+};
+
+const REGION_NAMES = {
+  us: "🇺🇸 EE.UU.",
+  eu: "🇪🇺 Europa",
+  as: "🌏 Asia",
+
+  // 🌎 Suramérica
+  br: "🇧🇷 Brasil",
+  cl: "🇨🇱 Chile",
+
+  // 🌏 Asia
+  in: "🇮🇳 India",
+  sg: "🇸🇬 Singapur",
+  jp: "🇯🇵 Japón",
+  id: "🇮🇩 Indonesia",
+
+  // 🌏 Oceanía
+  au: "🇦🇺 Australia",
+};
+
+const SERVICE_PRICES = {
+  backup: 20,
+  monitoring: 15,
+  ssl: 10,
+};
+
+const PLAN_PRICES = {
+  basic: 50000,
+  pro: 100000,
+  enterprise: 250000,
+};
+
+const PLAN_NAMES = {
+  basic: "Basic",
+  pro: "Professional",
+  enterprise: "Enterprise",
+};
 // ─────────────────────────────────────────────
 // PASO 1 — VALIDACIÓN EN TIEMPO REAL (blur/input)
 // ─────────────────────────────────────────────
@@ -38,7 +87,6 @@ const limpiarError = (errorId, inputEl) => {
 
 // Registrar eventos blur e input en campos del paso 1
 function iniciarValidacionCampos() {
-
   // Nombre de proyecto
   const inputNombre = document.getElementById("project-name");
   inputNombre.addEventListener("blur", () => {
@@ -66,17 +114,19 @@ function iniciarValidacionCampos() {
     }
   });
   inputEmpresa.addEventListener("input", () => {
-    if (validarRequerido(inputEmpresa.value)) limpiarError("error-company-name", inputEmpresa);
+    if (validarRequerido(inputEmpresa.value))
+      limpiarError("error-company-name", inputEmpresa);
   });
 
   // Descripción — mínimo 20 caracteres
   const textareaDesc = document.getElementById("project-desc");
   textareaDesc.addEventListener("blur", () => {
     if (!validarMinCaracteres(textareaDesc.value, 20)) {
-      mostrarError("error-project-desc",
+      mostrarError(
+        "error-project-desc",
         textareaDesc.value.trim().length === 0
           ? "Campo requerido."
-          : "Mínimo 20 caracteres."
+          : "Mínimo 20 caracteres.",
       );
       textareaDesc.classList.add("error");
     } else {
@@ -84,7 +134,8 @@ function iniciarValidacionCampos() {
     }
   });
   textareaDesc.addEventListener("input", () => {
-    if (validarMinCaracteres(textareaDesc.value, 20)) limpiarError("error-project-desc", textareaDesc);
+    if (validarMinCaracteres(textareaDesc.value, 20))
+      limpiarError("error-project-desc", textareaDesc);
   });
 
   // Email
@@ -101,7 +152,8 @@ function iniciarValidacionCampos() {
     }
   });
   inputEmail.addEventListener("input", () => {
-    if (validarEmail(inputEmail.value)) limpiarError("error-contact-email", inputEmail);
+    if (validarEmail(inputEmail.value))
+      limpiarError("error-contact-email", inputEmail);
   });
 }
 
@@ -110,16 +162,17 @@ function iniciarValidacionCampos() {
 // ─────────────────────────────────────────────
 
 // Funciones flecha de cálculo (Punto 3c)
-const calcularRegion   = (region) => REGION_PRICES[region] ?? 0;
+const calcularRegion = (region) => REGION_PRICES[region] ?? 0;
 const calcularServicios = (servicios) =>
   servicios.reduce((acc, svc) => acc + (SERVICE_PRICES[svc] ?? 0), 0);
-const calcularBase     = (plan) => PLAN_PRICES[plan] ?? 0;
-const calcularTotal    = (plan, region, servicios) =>
+const calcularBase = (plan) => PLAN_PRICES[plan] ?? 0;
+const calcularTotal = (plan, region, servicios) =>
   calcularBase(plan) + calcularRegion(region) + calcularServicios(servicios);
 
 function obtenerServiciosSeleccionados() {
-  return Array.from(document.querySelectorAll('input[name="services"]:checked'))
-    .map(cb => cb.value);
+  return Array.from(
+    document.querySelectorAll('input[name="services"]:checked'),
+  ).map((cb) => cb.value);
 }
 
 function actualizarSubtotal() {
@@ -130,8 +183,10 @@ function actualizarSubtotal() {
 }
 
 function iniciarCalculoRecursos() {
-  document.getElementById("server-region").addEventListener("change", actualizarSubtotal);
-  document.querySelectorAll('input[name="services"]').forEach(cb => {
+  document
+    .getElementById("server-region")
+    .addEventListener("change", actualizarSubtotal);
+  document.querySelectorAll('input[name="services"]').forEach((cb) => {
     cb.addEventListener("change", actualizarSubtotal);
   });
 }
@@ -148,13 +203,13 @@ function iniciarCalculoRecursos() {
  */
 function procesarCotizacion(datos, callback) {
   const datosProcesados = {
-    projectName:  datos.projectName.trim().toUpperCase(),
-    companyName:  datos.companyName.trim().toUpperCase(),
-    projectDesc:  datos.projectDesc.trim(),
+    projectName: datos.projectName.trim().toUpperCase(),
+    companyName: datos.companyName.trim().toUpperCase(),
+    projectDesc: datos.projectDesc.trim(),
     contactEmail: datos.contactEmail.trim().toLowerCase(),
-    region:       datos.region,
-    services:     datos.services,
-    plan:         datos.plan,
+    region: datos.region,
+    services: datos.services,
+    plan: datos.plan,
   };
   callback(datosProcesados);
 }
@@ -176,7 +231,8 @@ function enviarAlServidor(data) {
     }
     // Simular latencia de red (2 segundos)
     setTimeout(() => {
-      const txId = "TXN-" + Math.random().toString(36).toUpperCase().substring(2, 10);
+      const txId =
+        "TXN-" + Math.random().toString(36).toUpperCase().substring(2, 10);
       resolve(txId);
     }, 2000);
   });
@@ -198,9 +254,13 @@ function irAPaso(nuevoStep) {
   for (let i = 1; i <= TOTAL_STEPS; i++) {
     const dot = document.getElementById(`step-dot-${i}`);
     dot.classList.remove("active", "done");
-    if (i < nuevoStep)       dot.classList.add("done"),   (dot.querySelector(".step-circle").textContent = "✓");
-    else if (i === nuevoStep) dot.classList.add("active"), (dot.querySelector(".step-circle").textContent = i);
-    else                      dot.querySelector(".step-circle").textContent = i;
+    if (i < nuevoStep)
+      (dot.classList.add("done"),
+        (dot.querySelector(".step-circle").textContent = "✓"));
+    else if (i === nuevoStep)
+      (dot.classList.add("active"),
+        (dot.querySelector(".step-circle").textContent = i));
+    else dot.querySelector(".step-circle").textContent = i;
   }
 
   // Actualizar líneas
@@ -219,30 +279,40 @@ function irAPaso(nuevoStep) {
 function validarPaso1() {
   let ok = true;
 
-  const nombre  = document.getElementById("project-name");
+  const nombre = document.getElementById("project-name");
   const empresa = document.getElementById("company-name");
-  const desc    = document.getElementById("project-desc");
-  const email   = document.getElementById("contact-email");
+  const desc = document.getElementById("project-desc");
+  const email = document.getElementById("contact-email");
 
   if (!validarRequerido(nombre.value)) {
     mostrarError("error-project-name", "Campo requerido.");
-    nombre.classList.add("error"); ok = false;
+    nombre.classList.add("error");
+    ok = false;
   }
   if (!validarRequerido(empresa.value)) {
     mostrarError("error-company-name", "Campo requerido.");
-    empresa.classList.add("error"); ok = false;
+    empresa.classList.add("error");
+    ok = false;
   }
   if (!validarMinCaracteres(desc.value, 20)) {
-    mostrarError("error-project-desc",
-      desc.value.trim().length === 0 ? "Campo requerido." : "Mínimo 20 caracteres."
+    mostrarError(
+      "error-project-desc",
+      desc.value.trim().length === 0
+        ? "Campo requerido."
+        : "Mínimo 20 caracteres.",
     );
-    desc.classList.add("error"); ok = false;
+    desc.classList.add("error");
+    ok = false;
   }
   if (!validarRequerido(email.value) || !validarEmail(email.value)) {
-    mostrarError("error-contact-email",
-      !validarRequerido(email.value) ? "Campo requerido." : "Ingresa un correo válido."
+    mostrarError(
+      "error-contact-email",
+      !validarRequerido(email.value)
+        ? "Campo requerido."
+        : "Ingresa un correo válido.",
     );
-    email.classList.add("error"); ok = false;
+    email.classList.add("error");
+    ok = false;
   }
 
   return ok;
@@ -274,30 +344,34 @@ function validarPaso3() {
 
 function construirResumen() {
   const datos = obtenerDatosFormulario();
-  const grid  = document.getElementById("summary-grid");
+  const grid = document.getElementById("summary-grid");
 
-  const plan    = datos.plan || "—";
-  const region  = datos.region || "—";
-  const servicios = datos.services.length ? datos.services.join(", ") : "Ninguno";
-  const total = datos.plan
-    ? calcularTotal(plan, region, datos.services)
-    : 0;
+  const plan = datos.plan || "—";
+  const region = datos.region || "—";
+  const servicios = datos.services.length
+    ? datos.services.join(", ")
+    : "Ninguno";
+  const total = datos.plan ? calcularTotal(plan, region, datos.services) : 0;
 
   const filas = [
-    { label: "Proyecto",      value: datos.projectName  || "—" },
-    { label: "Empresa",       value: datos.companyName   || "—" },
-    { label: "Correo",        value: datos.contactEmail  || "—" },
-    { label: "Región",        value: REGION_NAMES[region] || region },
-    { label: "Servicios",     value: servicios },
-    { label: "Plan",          value: PLAN_NAMES[plan] || plan },
+    { label: "Proyecto", value: datos.projectName || "—" },
+    { label: "Empresa", value: datos.companyName || "—" },
+    { label: "Correo", value: datos.contactEmail || "—" },
+    { label: "Región", value: REGION_NAMES[region] || region },
+    { label: "Servicios", value: servicios },
+    { label: "Plan", value: PLAN_NAMES[plan] || plan },
   ];
 
-  grid.innerHTML = filas.map(f => `
+  grid.innerHTML = filas
+    .map(
+      (f) => `
     <div class="summary-row">
       <span class="label">${f.label}</span>
       <span class="value">${f.value}</span>
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 
   document.getElementById("total-amount").textContent = `$${total} / mes`;
 }
@@ -308,13 +382,13 @@ function construirResumen() {
 
 function obtenerDatosFormulario() {
   return {
-    projectName:  document.getElementById("project-name").value,
-    companyName:  document.getElementById("company-name").value,
-    projectDesc:  document.getElementById("project-desc").value,
+    projectName: document.getElementById("project-name").value,
+    companyName: document.getElementById("company-name").value,
+    projectDesc: document.getElementById("project-desc").value,
     contactEmail: document.getElementById("contact-email").value,
-    region:       document.getElementById("server-region").value,
-    services:     obtenerServiciosSeleccionados(),
-    plan:         document.querySelector('input[name="plan"]:checked')?.value || "",
+    region: document.getElementById("server-region").value,
+    services: obtenerServiciosSeleccionados(),
+    plan: document.querySelector('input[name="plan"]:checked')?.value || "",
   };
 }
 
@@ -329,15 +403,15 @@ function manejarEnvio(e) {
 
   // Spinner y estado de carga
   const btnSubmit = document.getElementById("btn-submit");
-  const btnText   = document.getElementById("btn-submit-text");
-  const spinner   = document.getElementById("spinner");
-  const statusEl  = document.getElementById("send-status");
+  const btnText = document.getElementById("btn-submit-text");
+  const spinner = document.getElementById("spinner");
+  const statusEl = document.getElementById("send-status");
 
   btnSubmit.disabled = true;
   btnText.style.display = "none";
   spinner.style.display = "inline-block";
-  statusEl.textContent  = "⏳ Procesando y enviando datos al servidor...";
-  statusEl.style.color  = "var(--text-muted)";
+  statusEl.textContent = "⏳ Procesando y enviando datos al servidor...";
+  statusEl.style.color = "var(--text-muted)";
 
   // Punto 4 — Callback para imprimir resumen en consola
   procesarCotizacion(datos, (datosProcesados) => {
@@ -358,9 +432,9 @@ function manejarEnvio(e) {
       const successScreen = document.getElementById("success-screen");
       successScreen.style.display = "block";
 
-      const plan   = datos.plan;
+      const plan = datos.plan;
       const region = datos.region;
-      const total  = calcularTotal(plan, region, datos.services);
+      const total = calcularTotal(plan, region, datos.services);
 
       document.getElementById("transaction-box").innerHTML = `
         ID de transacción: <strong>${txId}</strong><br/>
@@ -372,8 +446,8 @@ function manejarEnvio(e) {
       btnSubmit.disabled = false;
       btnText.style.display = "inline";
       spinner.style.display = "none";
-      statusEl.textContent  = `❌ Error: ${err.message}`;
-      statusEl.style.color  = "var(--danger)";
+      statusEl.textContent = `❌ Error: ${err.message}`;
+      statusEl.style.color = "var(--danger)";
     });
 }
 
@@ -388,7 +462,9 @@ function iniciarNavegacion() {
   });
 
   // Paso 2 → 1
-  document.getElementById("btn-back-2").addEventListener("click", () => irAPaso(1));
+  document
+    .getElementById("btn-back-2")
+    .addEventListener("click", () => irAPaso(1));
 
   // Paso 2 → 3
   document.getElementById("btn-next-2").addEventListener("click", () => {
@@ -396,7 +472,9 @@ function iniciarNavegacion() {
   });
 
   // Paso 3 → 2
-  document.getElementById("btn-back-3").addEventListener("click", () => irAPaso(2));
+  document
+    .getElementById("btn-back-3")
+    .addEventListener("click", () => irAPaso(2));
 
   // Paso 3 → 4 (resumen)
   document.getElementById("btn-next-3").addEventListener("click", () => {
@@ -407,10 +485,14 @@ function iniciarNavegacion() {
   });
 
   // Paso 4 → 3
-  document.getElementById("btn-back-4").addEventListener("click", () => irAPaso(3));
+  document
+    .getElementById("btn-back-4")
+    .addEventListener("click", () => irAPaso(3));
 
   // Submit — Finalizar Compra
-  document.getElementById("configurator-form").addEventListener("submit", manejarEnvio);
+  document
+    .getElementById("configurator-form")
+    .addEventListener("submit", manejarEnvio);
 
   // Reiniciar
   document.getElementById("btn-restart").addEventListener("click", () => {
@@ -428,7 +510,7 @@ function iniciarNavegacion() {
 // ─────────────────────────────────────────────
 
 document.addEventListener("DOMContentLoaded", () => {
-  iniciarValidacionCampos();    // Punto 1d — eventos blur/input
-  iniciarCalculoRecursos();     // Punto 2d — subtotal automático
-  iniciarNavegacion();          // Navegación entre pasos
+  iniciarValidacionCampos(); // Punto 1d — eventos blur/input
+  iniciarCalculoRecursos(); // Punto 2d — subtotal automático
+  iniciarNavegacion(); // Navegación entre pasos
 });
