@@ -4,7 +4,7 @@
 
 // PRECIOS Y CONSTANTES
 const REGION_PRICES = {
-  us: 0,
+  us: 50000,
   eu: 40000,
   as: 60000,
 
@@ -204,7 +204,7 @@ function procesarCotizacion(datos, callback) {
 }
 
 // ─────────────────────────────────────────────
-// PASO 5 — PROMESA SIMULADA (Punto 5)
+// PROMESA SIMULADA
 // ─────────────────────────────────────────────
 
 /**
