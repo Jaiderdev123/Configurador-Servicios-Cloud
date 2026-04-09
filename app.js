@@ -8,20 +8,6 @@ const REGION_PRICES = {
   eu: 40000,
   as: 60000,
 
-<<<<<<< HEAD
-  // Suramérica
-  br: 20, // Brasil
-  cl: 18, // Chile
-
-  // Asia (más granular)
-  in: 12, // India (barato)
-  sg: 22, // Singapur (caro)
-  jp: 25, // Japón (premium)
-  id: 13, // Indonesia
-
-  // Oceanía
-  au: 28, // Australia (muy caro)
-=======
   // 🌎 Suramérica
   br: 80000, // Brasil
   cl: 70000, // Chile
@@ -34,7 +20,6 @@ const REGION_PRICES = {
 
   // 🌏 Oceanía
   au: 115000, // Australia
->>>>>>> ca91b757396ff8e526a6c436cefa0744648835b4
 };
 
 const REGION_NAMES = {
@@ -74,15 +59,10 @@ const PLAN_NAMES = {
   enterprise: "Enterprise",
 };
 
-<<<<<<< HEAD
-// PASO 1 — VALIDACIÓN EN TIEMPO REAL (blur/input)
-// Funciones flecha de validación 
-=======
 const formatCOP = (valor) =>
   `COP $ ${valor.toLocaleString("es-CO")}`;
 
-// Funciones flecha de validación (Punto 3c)
->>>>>>> ca91b757396ff8e526a6c436cefa0744648835b4
+// Funciones flecha de validación
 const validarRequerido = (valor) => valor.trim().length > 0;
 const validarMinCaracteres = (valor, min) => valor.trim().length >= min;
 const validarEmail = (valor) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor.trim());
