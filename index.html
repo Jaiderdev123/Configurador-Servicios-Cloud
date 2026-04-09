@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CloudConfig | Configurador de Servicios SaaS</title>
-  <meta name="description" content="Configura tu plan SaaS personalizado. Elige región, servicios, y plan de cómputo para tu empresa." />
+  <meta name="description" content="Configura tu plan servidor personalizado. Elige región, servicios, y plan de cómputo para tu empresa." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -16,10 +16,10 @@
   <header class="site-header">
     <div class="header-inner">
       <div class="logo">
-        <span class="logo-icon">☁</span>
-        <span class="logo-text">Cloud<strong>Config</strong></span>
+        <span class="logo-icon"><img src="icons/logo-cloud.png" alt="CloudSystems logo" /></span>
+        <span class="logo-text">Cloud<strong>Systems</strong></span>
       </div>
-      <div class="header-badge">Configurador SaaS</div>
+      <div class="header-badge">Configurador de Servidor SaaS</div>
     </div>
   </header>
 
@@ -55,10 +55,10 @@
       <!-- STEP 1: Registro de Proyecto -->
       <section class="card step-panel active" id="panel-1">
         <div class="card-header">
-          <div class="card-icon">📋</div>
+          <div class="card-icon"><img src="icons/registro.png" alt="Registro de Proyecto" /></div>
           <div>
             <h2 class="card-title">Registro de Proyecto</h2>
-            <p class="card-subtitle">Cuéntanos sobre tu proyecto cloud</p>
+            <p class="card-subtitle">Cuéntanos sobre tu proyecto en la nube</p>
           </div>
         </div>
 
@@ -94,7 +94,7 @@
       <!-- STEP 2: Selección de Recursos -->
       <section class="card step-panel" id="panel-2">
         <div class="card-header">
-          <div class="card-icon">🌐</div>
+          <div class="card-icon"><img src="icons/la-computacion-en-nube.png" alt="Selección de Recursos" /></div>
           <div>
             <h2 class="card-title">Selección de Recursos</h2>
             <p class="card-subtitle">Elige tu región y servicios adicionales</p>
@@ -120,7 +120,7 @@
             <label class="checkbox-card" for="svc-backup">
               <input type="checkbox" id="svc-backup" name="services" value="backup" data-price="20" />
               <div class="checkbox-card-inner">
-                <span class="svc-icon">💾</span>
+                <span class="svc-icon"><img src="icons/backup.png" alt="Backup" /></span>
                 <span class="svc-name">Backup Automático</span>
                 <span class="svc-price">+$20/mes</span>
               </div>
@@ -128,7 +128,7 @@
             <label class="checkbox-card" for="svc-monitoring">
               <input type="checkbox" id="svc-monitoring" name="services" value="monitoring" data-price="15" />
               <div class="checkbox-card-inner">
-                <span class="svc-icon">📊</span>
+                <span class="svc-icon"><img src="icons/monitoreo.png" alt="Monitoreo" /></span>
                 <span class="svc-name">Monitoreo 24/7</span>
                 <span class="svc-price">+$15/mes</span>
               </div>
@@ -136,7 +136,7 @@
             <label class="checkbox-card" for="svc-ssl">
               <input type="checkbox" id="svc-ssl" name="services" value="ssl" data-price="10" />
               <div class="checkbox-card-inner">
-                <span class="svc-icon">🔒</span>
+                <span class="svc-icon"><img src="icons/seguridad-ssl.png" alt="SSL" /></span>
                 <span class="svc-name">Certificado SSL</span>
                 <span class="svc-price">+$10/mes</span>
               </div>
@@ -159,7 +159,7 @@
       <!-- STEP 3: Selección de Plan -->
       <section class="card step-panel" id="panel-3">
         <div class="card-header">
-          <div class="card-icon">🚀</div>
+          <div class="card-icon"><img src="icons/rocket.png" alt="Plan de Cómputo" /></div>
           <div>
             <h2 class="card-title">Plan de Cómputo</h2>
             <p class="card-subtitle">Selecciona el nivel de rendimiento para tu infraestructura</p>
@@ -221,7 +221,7 @@
       <!-- STEP 4: Resumen y Confirmación -->
       <section class="card step-panel" id="panel-4">
         <div class="card-header">
-          <div class="card-icon">📄</div>
+          <div class="card-icon"><img src="icons/resumen-de-compra.png" alt="Resumen de Configuración" /></div>
           <div>
             <h2 class="card-title">Resumen de Configuración</h2>
             <p class="card-subtitle">Revisa tu cotización antes de finalizar</p>
@@ -255,7 +255,7 @@
 
     <!-- Pantalla de Éxito -->
     <div class="success-screen" id="success-screen" style="display:none;">
-      <div class="success-icon">🎉</div>
+      <div class="success-icon"><img src="icons/check.png" alt="Éxito" /></div>
       <h2>¡Configuración Registrada!</h2>
       <p>Tu proyecto ha sido procesado exitosamente.</p>
       <div class="transaction-box" id="transaction-box"></div>
@@ -266,7 +266,7 @@
 
   <!-- Footer -->
   <footer class="site-footer">
-    <p>© 2025 CloudConfig — Configurador SaaS · Ejercicios JavaScript Parte 2</p>
+    <p>CloudSystems — Configurador de Servidor SaaS</p>
   </footer>
 
   <script src="app.js"></script>
