@@ -5,9 +5,10 @@
 // PRECIOS Y CONSTANTES
 const REGION_PRICES = {
   us: 0,
-  eu: 10,
-  as: 15,
+  eu: 40000,
+  as: 60000,
 
+<<<<<<< HEAD
   // Suramérica
   br: 20, // Brasil
   cl: 18, // Chile
@@ -20,6 +21,20 @@ const REGION_PRICES = {
 
   // Oceanía
   au: 28, // Australia (muy caro)
+=======
+  // 🌎 Suramérica
+  br: 80000, // Brasil
+  cl: 70000, // Chile
+
+  // 🌏 Asia (más granular)
+  in: 45000, // India
+  sg: 90000, // Singapur
+  jp: 100000, // Japón (premium)
+  id: 50000, // Indonesia
+
+  // 🌏 Oceanía
+  au: 115000, // Australia
+>>>>>>> ca91b757396ff8e526a6c436cefa0744648835b4
 };
 
 const REGION_NAMES = {
@@ -42,9 +57,9 @@ const REGION_NAMES = {
 };
 
 const SERVICE_PRICES = {
-  backup: 20,
-  monitoring: 15,
-  ssl: 10,
+  backup: 80000,
+  monitoring: 60000,
+  ssl: 40000,
 };
 
 const PLAN_PRICES = {
@@ -59,8 +74,15 @@ const PLAN_NAMES = {
   enterprise: "Enterprise",
 };
 
+<<<<<<< HEAD
 // PASO 1 — VALIDACIÓN EN TIEMPO REAL (blur/input)
 // Funciones flecha de validación 
+=======
+const formatCOP = (valor) =>
+  `COP $ ${valor.toLocaleString("es-CO")}`;
+
+// Funciones flecha de validación (Punto 3c)
+>>>>>>> ca91b757396ff8e526a6c436cefa0744648835b4
 const validarRequerido = (valor) => valor.trim().length > 0;
 const validarMinCaracteres = (valor, min) => valor.trim().length >= min;
 const validarEmail = (valor) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor.trim());
@@ -170,7 +192,7 @@ function actualizarSubtotal() {
   const region = document.getElementById("server-region").value;
   const servicios = obtenerServiciosSeleccionados();
   const subtotal = calcularRegion(region) + calcularServicios(servicios);
-  document.getElementById("subtotal-amount").textContent = `$${subtotal} / mes`;
+  document.getElementById("subtotal-amount").textContent = `${formatCOP(subtotal)} / mes`;
 }
 
 function iniciarCalculoRecursos() {
@@ -353,7 +375,7 @@ function construirResumen() {
     )
     .join("");
 
-  document.getElementById("total-amount").textContent = `$${total} / mes`;
+  document.getElementById("total-amount").textContent = `${formatCOP(total)} / mes`;
 }
 
 
@@ -418,7 +440,7 @@ function manejarEnvio(e) {
 
       document.getElementById("transaction-box").innerHTML = `
         ID de transacción: <strong>${txId}</strong><br/>
-        Plan: ${PLAN_NAMES[plan] || plan} | Total: $${total}/mes
+        Plan: ${PLAN_NAMES[plan] || plan} | Total: ${formatCOP(total)}/mes
       `;
     })
     .catch((err) => {
